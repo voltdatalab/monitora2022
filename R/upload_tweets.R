@@ -19,4 +19,3 @@ upload_tweets <- function(tweets, sql_tweets) {
   # DISCONNECT FROM DATABASE
   pool::poolClose(db)
 }
-names(temp) |> clipr::write_clip()

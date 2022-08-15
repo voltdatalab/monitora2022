@@ -9,12 +9,6 @@ db_connect <- function(...) {
   )
 }
 
-db_upload <- function(...) {
-  ...
-}
-
-
 # DBI::dbGetQuery(db, "SELECT table_name FROM information_schema.tables WHERE table_schema='azmina_monitora'")
-
 
 # DBI::dbGetQuery(db, "select * from azmina_monitora.temp")
