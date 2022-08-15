@@ -48,7 +48,8 @@ dados_candidates <- dados_candidates |>
     twitter = tolower(twitter)
   ) |>
   dplyr::left_join(tbl_userids, "twitter") |>
-  dplyr::mutate(twitter_id = as.character(twitter_id))
+  dplyr::mutate(twitter_id = as.character(twitter_id)) |>
+  dplyr::filter(!is.na(twitter))
 
 usethis::use_data(dados_candidates, overwrite = TRUE)
 

@@ -20,6 +20,7 @@ jobs:
         with:
           extra-packages: |
             any::remotes
+            any::reader
       - name: Install package
         run: |
           Rscript -e "remotes::install_github('rmhirota/monitora2022')"
