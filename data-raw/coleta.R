@@ -7,16 +7,6 @@ tbl_twitter <- monitora2022::dados_candidates |>
 token <- rtweet::rtweet_app(Sys.getenv("TW_TOKEN"))
 rtweet::auth_as(token)
 
-db <- monitora2022:::db_connect()
-# last_status <- "1556661244651880449"
-last_status <- DBI::dbGetQuery(
-  db,
-  "SELECT created_at, id FROM azmina_monitora.base2022
-    ORDER BY created_at DESC LIMIT 1"
-) |>
-  dplyr::pull(id)
-pool::poolClose(db)
-
 
 new_tweets <- purrr::map_dfr(
   tbl_twitter$twitter,

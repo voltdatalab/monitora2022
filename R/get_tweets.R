@@ -1,8 +1,26 @@
 get_tweets <- function(username, token, ...) {
+  message(username)
+  db <- db_connect()
+  last_status <- DBI::dbGetQuery(
+    db, paste0(
+      "SELECT created_at, id FROM azmina_monitora.base2022 ",
+      "WHERE username = '", username,
+      "' ORDER BY created_at DESC LIMIT 1"
+    )
+  ) |>
+    dplyr::pull(id)
+  pool::poolClose(db)
+  if (length(last_status) == 0) {
+    last_status <- "1559226013304889344"
+  } else {
+    last_status <- as.character(last_status)
+  }
+
   rtweet::auth_as(token)
   user_tweets <- rtweet::search_tweets(
     q = paste0("@", username),
     n = Inf,
+    since_id = last_status,
     retryonratelimit = TRUE,
     lang = "pt",
     ...
@@ -10,7 +28,7 @@ get_tweets <- function(username, token, ...) {
   if (nrow(user_tweets) > 0) {
     user_tweets <- user_tweets |>
       dplyr::select(
-        created_at:full_text, source:in_reply_to_screen_name,
+        created_at:full_text, source,
         is_quote_status:retweeted
       ) |>
       dplyr::mutate(
