@@ -16,8 +16,7 @@ new_tweets <- purrr::map_dfr(
 
 new_tweets_tidy <- new_tweets |>
   dplyr::distinct(id, username, .keep_all = TRUE) |>
-  dplyr::filter(id_str != last_status) |>
-  dplyr::select(-dplyr::starts_with("quotes_status"))
+  dplyr::select(-dplyr::starts_with("quoted_status"))
 
 sql_update <- readr::read_file("inst/update_monitora.sql")
 monitora2022:::upload_tweets(new_tweets_tidy, sql_update)
