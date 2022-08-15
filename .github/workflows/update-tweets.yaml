@@ -1,0 +1,27 @@
+on:
+  schedule:
+    - cron: "0 18 * * *"
+  workflow_dispatch:
+
+name: update tweets
+
+jobs:
+  update_index:
+    name: update tweets
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_PAT: ${{ secrets.PAT }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: r-lib/actions/setup-r@v2
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: |
+            any::remotes
+            any::purrr
+      - name: Install package
+        run: |
+          Rscript -e "remotes::install_github('rmhirota/monitora2022')"
+      - name: Execute Script
+        run: |
+          Rscript "data-raw/coleta.R"
