@@ -6,8 +6,8 @@ sheets_candidatas <- googlesheets4::as_sheets_id(
 )
 dados_candidates <- sheets_candidatas |>
   googlesheets4::sheet_names() |>
-  purrr::discard(~stringr::str_detect(.x, "dinâmica")) |>
-  purrr::map_dfr(~googlesheets4::read_sheet(sheets_candidatas, sheet = .x)) |>
+  purrr::discard(~ stringr::str_detect(.x, "dinâmica")) |>
+  purrr::map_dfr(~ googlesheets4::read_sheet(sheets_candidatas, sheet = .x)) |>
   janitor::clean_names()
 
 token <- rtweet::rtweet_app(Sys.getenv("TW_TOKEN"))
@@ -51,3 +51,9 @@ dados_candidates <- dados_candidates |>
   dplyr::mutate(twitter_id = as.character(twitter_id))
 
 usethis::use_data(dados_candidates, overwrite = TRUE)
+
+# DBI::dbWriteTable(
+#   db, c("azmina_monitora", "candidaturas2022"),
+#   dados_candidates,
+#   row.names = FALSE
+# )
