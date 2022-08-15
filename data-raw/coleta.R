@@ -18,7 +18,8 @@ last_status <- DBI::dbGetQuery(
 pool::poolClose(db)
 
 
-new_tweets <- purrr::map_dfr(teste,
+new_tweets <- purrr::map_dfr(
+  tbl_twitter$twitter,
   monitora2022:::get_tweets,
   token = token
 )
