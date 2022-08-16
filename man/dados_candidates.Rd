@@ -5,7 +5,7 @@
 \alias{dados_candidates}
 \title{Dados de candidates}
 \format{
-An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 223 rows and 23 columns.
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 165 rows and 23 columns.
 }
 \usage{
 dados_candidates
