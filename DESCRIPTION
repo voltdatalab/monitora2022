@@ -16,6 +16,7 @@ Imports:
     DBI,
     dplyr,
     pool,
+    readr,
     RPostgreSQL,
     rtweet,
     stringr
