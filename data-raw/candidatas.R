@@ -36,7 +36,6 @@ get_user_id <- function(username) {
 }
 
 userids <- purrr::map_dbl(usernames, get_user_id)
-
 tbl_userids <- tibble::tibble(
   twitter = usernames, twitter_id = userids
 )
@@ -48,13 +47,13 @@ dados_candidates <- dados_candidates |>
     twitter = tolower(twitter)
   ) |>
   dplyr::left_join(tbl_userids, "twitter") |>
-  dplyr::mutate(twitter_id = as.character(twitter_id)) |>
-  dplyr::filter(!is.na(twitter))
+  dplyr::mutate(twitter_id = as.character(twitter_id))
 
 usethis::use_data(dados_candidates, overwrite = TRUE)
 
-# DBI::dbWriteTable(
-#   db, c("azmina_monitora", "candidaturas2022"),
-#   dados_candidates,
-#   row.names = FALSE
-# )
+DBI::dbWriteTable(
+  db, c("azmina_monitora", "candidaturas2022_ago18"),
+  dados_candidates,
+  row.names = FALSE
+)
+
