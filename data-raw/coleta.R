@@ -1,6 +1,6 @@
 
 tbl_twitter <- monitora2022::dados_candidates |>
-  dplyr::select(candidata, twitter) |>
+  dplyr::select(nome, twitter) |>
   dplyr::distinct() |>
   dplyr::filter(!is.na(twitter))
 
