@@ -21,23 +21,10 @@ new_tweets_tidy <- new_tweets |>
 sql_update <- readr::read_file("inst/update_monitora.sql")
 monitora2022:::upload_tweets(new_tweets_tidy, sql_update)
 
-# sql_terms <- readr::read_file("inst/terms.sql")
-# update_ofensivos(sql_terms)
+ofensivos <- readr::read_file("inst/terms_tweets.sql")
+monitora2022:::update_ofensivos(ofensivos)
 
-# tweets <- tweets |>
-#   dplyr::mutate(
-#     ofensivo = stringr::str_detect(full_text, rx),
-#     termos_ofensivos = stringr::str_extract_all(full_text, rx)
-#   )
+termos <- readr::read_file("inst/terms.sql")
+monitora2022:::update_ofensivos(termos)
 
-# voltutils::autenticar_gsheets()
-# tweets |>
-#   dplyr::filter(ofensivo) |>
-#   dplyr::mutate(termos_ofensivos = purrr::map_chr(
-#     termos_ofensivos, ~ stringr::str_c(unique(.x), collapse = ", ")
-#   )) |>
-#   dplyr::transmute(full_text, candidata = perfil, termos_ofensivos) |>
-#   googlesheets4::write_sheet(
-#     googlesheets4::as_sheets_id("1i3IQtoYvmrbUewm-21PqVY9Ypo3yYgasDaY0yUqomFA"),
-#     "amostra_ofensivos"
-#   )
+monitora2022:::drop_temp()

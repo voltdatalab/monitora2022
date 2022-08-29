@@ -16,8 +16,6 @@ upload_tweets <- function(tweets, sql_tweets) {
   # ADD TO TWEETS
   DBI::dbExecute(db, sql_tweets)
 
-  DBI::dbExecute(db, "drop table azmina_monitora.temp")
-
   # DISCONNECT FROM DATABASE
   pool::poolClose(db)
 }
