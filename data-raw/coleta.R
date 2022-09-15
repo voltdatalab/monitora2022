@@ -1,8 +1,11 @@
+db <- monitora2022:::db_connect()
 
-tbl_twitter <- monitora2022::dados_candidates |>
+tbl_twitter <- db |>
+  DBI::dbGetQuery("select * from azmina_monitora.candidaturas2022") |>
   dplyr::select(nome, twitter) |>
   dplyr::distinct() |>
   dplyr::filter(!is.na(twitter))
+pool::poolClose(db)
 
 token <- rtweet::rtweet_app(Sys.getenv("TW_TOKEN"))
 rtweet::auth_as(token)
@@ -28,3 +31,4 @@ termos <- readr::read_file("inst/terms.sql")
 monitora2022:::update_ofensivos(termos)
 
 monitora2022:::drop_temp()
+
